@@ -1,6 +1,6 @@
 # IntensiveTasksProject
 ## Практическая часть интенсива по Java в Aston.  
-#### module 2  
+#### module 0  
 - [ ] Использовать Hibernate в качестве ORM.  
 - [ ] База данных — PostgreSQL.
 - [ ] Настроить Hibernate без Spring, используя hibernate.cfg.xml или properties-файл.
