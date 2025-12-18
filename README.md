@@ -1,6 +1,8 @@
 # IntensiveTasksProject
 ## Практическая часть интенсива по Java в Aston.  
 #### module 0  
+` Разработать консольное приложение(user-service) на Java, использующее Hibernate для взаимодействия с PostgreSQL, без использования Spring.
+Приложение должно поддерживать базовые операции CRUD (Create, Read, Update, Delete) над сущностью User.`
 - [ ] Использовать Hibernate в качестве ORM.  
 - [ ] База данных — PostgreSQL.
 - [ ] Настроить Hibernate без Spring, используя hibernate.cfg.xml или properties-файл.
