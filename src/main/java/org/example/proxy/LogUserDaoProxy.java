@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-public class UserDaoProxy implements UserDao {
+public class LogUserDaoProxy implements UserDao {
 
     private final UserDao realUserDao;
 
-    public UserDaoProxy(UserDao realUserDao) {
+    public LogUserDaoProxy(UserDao realUserDao) {
         this.realUserDao = realUserDao;
     }
 

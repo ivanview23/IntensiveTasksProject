@@ -1,12 +1,14 @@
 package org.example.config;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.example.model.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.util.Properties;
 
+@Slf4j
 public class HibernateConfig {
 
     @Getter
@@ -21,9 +23,9 @@ public class HibernateConfig {
 
             sessionFactory = configuration.buildSessionFactory();
 
-            System.out.println("Фабрика сессий Hibernate успешно создана");
+            log.warn("Фабрика сессий Hibernate успешно создана");
         } catch (Exception e) {
-            System.out.println("Ошибка создания фабрики сессий!" + e.getMessage());
+            log.error("Ошибка создания фабрики сессий! {}", e.getMessage());
             throw new ExceptionInInitializerError(e);
         }
     }
@@ -31,7 +33,7 @@ public class HibernateConfig {
     public static void shutdown() {
         if (sessionFactory != null) {
             sessionFactory.close();
-            System.out.println("Фабрика сессий закрыта");
+            log.warn("Фабрика сессий закрыта");
         }
     }
 }
