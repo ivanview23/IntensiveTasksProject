@@ -1,5 +1,6 @@
 package org.example.service;
 
+import lombok.NonNull;
 import org.example.dao.UserDao;
 import org.example.model.User;
 import org.example.proxy.LogUserDaoProxy;
@@ -16,17 +17,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(User user) {
+    public User createUser(@NonNull User user) {
         return userDao.save(user);
     }
 
     @Override
-    public Optional<User> getUserById(Long id) {
+    public Optional<User> getUserById(@NonNull Long id) {
         return userDao.findById(id);
     }
 
     @Override
-    public Optional<User> getUserByEmail(String email) {
+    public Optional<User> getUserByEmail(@NonNull String email) {
         return userDao.findByEmail(email);
     }
 
@@ -36,12 +37,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User user) {
+    public User updateUser(@NonNull User user) {
         return userDao.update(user);
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public void deleteUser(@NonNull Long id) {
         userDao.delete(id);
     }
 }
