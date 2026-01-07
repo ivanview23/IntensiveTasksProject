@@ -24,16 +24,16 @@ public class UserServiceImplTest {
 
     private UserService userService;
 
-    private User testUser;
-
     @BeforeEach
     void setUp() {
         userService = new UserServiceImpl(userDao);
+    }
 
-        testUser = User.builder()
-                .id(1L)
-                .name("Иван Иванов")
-                .email("ivan@mail.com")
+    private User createTestUser(Long id, String name, String email) {
+        return User.builder()
+                .id(id)
+                .name(name)
+                .email(email)
                 .age(30)
                 .createdAt(LocalDateTime.now())
                 .build();
@@ -41,32 +41,29 @@ public class UserServiceImplTest {
 
     @Test
     void createUserTest() {
-        when(userDao.save(any(User.class))).thenReturn(testUser);
+        User createUser = createTestUser(1L, "Иван Иванов", "ivan@mail.ru");
 
-        User createdUser = userService.createUser(testUser);
+        when(userDao.save(any(User.class))).thenReturn(createUser);
+        User result = userService.createUser(createUser);
 
-        assertNotNull(createdUser);
-
-        assertEquals(1L, createdUser.getId());
-
-        assertEquals("Иван Иванов", createdUser.getName());
+        assertNotNull(result);
+        assertEquals(1L, result.getId());
+        assertEquals("Иван Иванов", result.getName());
 
         verify(userDao, times(1)).save(any(User.class));
-
-        System.out.println("Тест createUser_ShouldSaveUserAndReturnIt прошел успешно!");
     }
 
     @Test
     void getUserByIdShouldReturnUser() {
-        when(userDao.findById(1L)).thenReturn(Optional.of(testUser));
+        User createdUser = createTestUser(2L, "Иван Иванов", "ivan@mail.ru");
+        when(userDao.findById(2L)).thenReturn(Optional.of(createdUser));
 
-        Optional<User> result = userService.getUserById(1L);
+        Optional<User> result = userService.getUserById(2L);
 
         assertTrue(result.isPresent());
+        assertEquals(createdUser, result.get());
 
-        assertEquals(testUser, result.get());
-
-        verify(userDao, times(1)).findById(1L);
+        verify(userDao, times(1)).findById(2L);
     }
 
     @Test
@@ -82,8 +79,9 @@ public class UserServiceImplTest {
 
     @Test
     void getUserByEmailShouldReturnUser() {
-        String email = "ivan@mail.com";
-        when(userDao.findByEmail(email)).thenReturn(Optional.of(testUser));
+        String email = "ivan@mail.ru";
+        User createdUser = createTestUser(1L, "Иван Иванов", "ivan@mail.ru");
+        when(userDao.findByEmail(email)).thenReturn(Optional.of(createdUser));
 
         Optional<User> result = userService.getUserByEmail(email);
 
@@ -94,14 +92,15 @@ public class UserServiceImplTest {
 
     @Test
     void getAllUsersShouldReturnAllUsers() {
-        List<User> users = List.of(testUser);
+        User createdUser = createTestUser(1L, "Иван Иванов", "ivan@mail.ru");
+        List<User> users = List.of(createdUser);
         when(userDao.findAll()).thenReturn(users);
 
         List<User> result = userService.getAllUsers();
 
         assertNotNull(result);
         assertEquals(1, result.size());
-        assertEquals(testUser, result.get(0));
+        assertEquals(createdUser, result.get(0));
         verify(userDao, times(1)).findAll();
     }
 
