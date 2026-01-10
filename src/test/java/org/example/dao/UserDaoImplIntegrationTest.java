@@ -2,7 +2,9 @@ package org.example.dao;
 
 import org.example.config.TestHibernateConfig;
 import org.example.model.User;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.junit.jupiter.api.*;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -40,6 +42,21 @@ class UserDaoImplIntegrationTest {
     @BeforeEach
     void setUp() {
         userDao = new UserDaoImpl(testSessionFactory);
+        cleanDatabase();
+    }
+
+    private void cleanDatabase() {
+        try (Session session = testSessionFactory.openSession()) {
+            Transaction tx = session.beginTransaction();
+
+            session.createNativeQuery("DELETE FROM users").executeUpdate();
+
+            session.createNativeQuery("ALTER SEQUENCE users_id_seq RESTART WITH 1").executeUpdate();
+
+            tx.commit();
+        } catch (Exception e) {
+            System.err.println("Ошибка очистки БД: " + e.getMessage());
+        }
     }
 
     @AfterAll
