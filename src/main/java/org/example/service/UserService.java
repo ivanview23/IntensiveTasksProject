@@ -35,7 +35,6 @@ public class UserService {
         return userMapper.toDto(savedUser);
     }
 
-    @Transactional(readOnly = true)
     public UserResponseDto getUserById(Long id) {
         log.info("Поиск пользователя по id: {}", id);
 
@@ -45,7 +44,6 @@ public class UserService {
         return userMapper.toDto(user);
     }
 
-    @Transactional(readOnly = true)
     public UserResponseDto getUserByEmail(String email) {
         log.info("Поиск пользователя по почте: {}", email);
 
@@ -55,7 +53,6 @@ public class UserService {
         return userMapper.toDto(user);
     }
 
-    @Transactional(readOnly = true)
     public List<UserResponseDto> getAllUsers() {
         log.info("Поиск всех пользователей");
 
