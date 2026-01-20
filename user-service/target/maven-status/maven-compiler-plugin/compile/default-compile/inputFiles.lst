@@ -1,0 +1,11 @@
+/home/ivanview/Work/Projects/github/IntensiveTasksProject/user-service/src/main/java/org/example/mapper/UserMapper.java
+/home/ivanview/Work/Projects/github/IntensiveTasksProject/user-service/src/main/java/org/example/UserServiceApplication.java
+/home/ivanview/Work/Projects/github/IntensiveTasksProject/user-service/src/main/java/org/example/exception/ErrorResponse.java
+/home/ivanview/Work/Projects/github/IntensiveTasksProject/user-service/src/main/java/org/example/dto/UserRequestDto.java
+/home/ivanview/Work/Projects/github/IntensiveTasksProject/user-service/src/main/java/org/example/repository/UserRepository.java
+/home/ivanview/Work/Projects/github/IntensiveTasksProject/user-service/src/main/java/org/example/exception/UserNotFoundException.java
+/home/ivanview/Work/Projects/github/IntensiveTasksProject/user-service/src/main/java/org/example/service/UserService.java
+/home/ivanview/Work/Projects/github/IntensiveTasksProject/user-service/src/main/java/org/example/controller/UserController.java
+/home/ivanview/Work/Projects/github/IntensiveTasksProject/user-service/src/main/java/org/example/dto/UserResponseDto.java
+/home/ivanview/Work/Projects/github/IntensiveTasksProject/user-service/src/main/java/org/example/model/User.java
+/home/ivanview/Work/Projects/github/IntensiveTasksProject/user-service/src/main/java/org/example/exception/GlobalExceptionHandler.java
