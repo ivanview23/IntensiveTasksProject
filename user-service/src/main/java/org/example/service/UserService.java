@@ -2,12 +2,14 @@ package org.example.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.dto.UserEventDto;
 import org.example.dto.UserRequestDto;
 import org.example.dto.UserResponseDto;
 import org.example.exception.UserNotFoundException;
 import org.example.mapper.UserMapper;
 import org.example.model.User;
 import org.example.repository.UserRepository;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +24,9 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
+
+    private static final String USER_EVENTS_TOPIC = "user-events";
 
     public UserResponseDto createUser(UserRequestDto userDto) {
         log.info("Создание пользователя: {}", userDto);
@@ -31,7 +36,11 @@ public class UserService {
         }
 
         User user = userMapper.toEntity(userDto);
+        user.setCreatedAt(java.time.LocalDateTime.now());
         User savedUser = userRepository.save(user);
+
+        sendUserEvent("CREATED", savedUser);
+
         return userMapper.toDto(savedUser);
     }
 
@@ -84,10 +93,33 @@ public class UserService {
     public void deleteUser(Long id) {
         log.info("Удаление пользователя по id: {}", id);
 
-        if (!userRepository.existsById(id)) {
-            throw new UserNotFoundException("Пользователь с id " + id + " не найден");
-        }
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("Пользователь с id " + id + " не найден"));
+
+        sendUserEvent("DELETED", user);
 
         userRepository.deleteById(id);
+    }
+
+    private void sendUserEvent(String eventType, User user) {
+        try {
+            UserEventDto event = UserEventDto.builder()
+                    .eventType(eventType)
+                    .email(user.getEmail())
+                    .userId(user.getId())
+                    .userName(user.getName())
+                    .build();
+
+            kafkaTemplate.send(USER_EVENTS_TOPIC, event)
+                    .whenComplete((result, ex) -> {
+                        if (ex == null) {
+                            log.info("Событие отправлено в Kafka: {} для пользователя {}", eventType, user.getEmail());
+                        } else {
+                            log.error("Ошибка отправки события в Kafka: {}", ex.getMessage());
+                        }
+                    });
+        } catch (Exception e) {
+            log.error("Ошибка при отправке события в Kafka", e);
+        }
     }
 }
