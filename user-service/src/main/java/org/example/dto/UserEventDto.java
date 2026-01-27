@@ -10,8 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEventDto {
-    private String eventType;
+    private EventType eventType;
     private String email;
     private Long userId;
     private String userName;
+
+    public enum EventType {
+        CREATED,
+        DELETED
+    }
 }

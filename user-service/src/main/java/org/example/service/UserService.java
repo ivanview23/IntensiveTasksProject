@@ -1,5 +1,6 @@
 package org.example.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.UserEventDto;
@@ -24,7 +25,9 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
+
+    private final ObjectMapper objectMapper;
 
     private static final String USER_EVENTS_TOPIC = "user-events";
 
@@ -39,7 +42,7 @@ public class UserService {
         user.setCreatedAt(java.time.LocalDateTime.now());
         User savedUser = userRepository.save(user);
 
-        sendUserEvent("CREATED", savedUser);
+        sendUserEvent(UserEventDto.EventType.CREATED, savedUser);
 
         return userMapper.toDto(savedUser);
     }
@@ -96,12 +99,12 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("Пользователь с id " + id + " не найден"));
 
-        sendUserEvent("DELETED", user);
+        sendUserEvent(UserEventDto.EventType.DELETED, user);
 
         userRepository.deleteById(id);
     }
 
-    private void sendUserEvent(String eventType, User user) {
+    private void sendUserEvent(UserEventDto.EventType eventType, User user) {
         try {
             UserEventDto event = UserEventDto.builder()
                     .eventType(eventType)
@@ -110,7 +113,9 @@ public class UserService {
                     .userName(user.getName())
                     .build();
 
-            kafkaTemplate.send(USER_EVENTS_TOPIC, event)
+            String eventJson = objectMapper.writeValueAsString(event);
+
+            kafkaTemplate.send(USER_EVENTS_TOPIC, eventJson)
                     .whenComplete((result, ex) -> {
                         if (ex == null) {
                             log.info("Событие отправлено в Kafka: {} для пользователя {}", eventType, user.getEmail());

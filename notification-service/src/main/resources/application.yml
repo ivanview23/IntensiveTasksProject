@@ -24,8 +24,4 @@ spring:
         group-id: notification-group
         auto-offset-reset: earliest
         key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-        value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-        properties:
-          spring.json.trusted.packages: "org.example.dto"
-          spring.json.type.mapping: userEvent:org.example.dto.UserEventDto
-          spring.json.value.default.type: org.example.dto.UserEventDto
+        value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
