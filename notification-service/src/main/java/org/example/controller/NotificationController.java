@@ -46,10 +46,4 @@ public class NotificationController {
                     .build();
         }
     }
-
-    @Operation(summary = "Проверка доступности сервиса")
-    @GetMapping("/health")
-    public ResponseEntity<String> health() {
-        return ResponseEntity.ok("Notification service is running");
-    }
 }
