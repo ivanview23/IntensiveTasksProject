@@ -11,12 +11,13 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.kafka.test.context.EmbeddedKafka;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
+import static org.example.dto.UserEventDto.EventType.CREATED;
+import static org.example.dto.UserEventDto.EventType.DELETED;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
@@ -30,7 +31,6 @@ import static org.mockito.Mockito.*;
         }
 )
 @ActiveProfiles("test")
-@DirtiesContext
 class KafkaEmailIntegrationTest {
 
     @Autowired
@@ -50,7 +50,7 @@ class KafkaEmailIntegrationTest {
     @Test
     void whenUserCreatedEventSent_thenEmailShouldBeSent() throws Exception {
         UserEventDto event = UserEventDto.builder()
-                .eventType("CREATED")
+                .eventType(CREATED)
                 .email("test@example.com")
                 .userId(1L)
                 .userName("Test User")
@@ -86,7 +86,7 @@ class KafkaEmailIntegrationTest {
     @Test
     void whenUserDeletedEventSent_thenEmailShouldBeSent() {
         UserEventDto event = UserEventDto.builder()
-                .eventType("DELETED")
+                .eventType(DELETED)
                 .email("delete-test@example.com")
                 .userId(2L)
                 .userName("Deleted User")
@@ -112,7 +112,7 @@ class KafkaEmailIntegrationTest {
     @Test
     void whenInvalidEventSent_thenEmailShouldNotBeSent() {
         UserEventDto event = UserEventDto.builder()
-                .eventType("INVALID_TYPE")
+                .eventType(null)
                 .email("invalid@example.com")
                 .userId(3L)
                 .userName("Invalid User")
