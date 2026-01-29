@@ -1,6 +1,3 @@
-server:
-  port: 8081
-
 spring:
   application:
     name: notification-service
@@ -17,11 +14,21 @@ spring:
           starttls:
             enable: true
 
-  spring:
-    kafka:
-      bootstrap-servers: localhost:9092
-      consumer:
-        group-id: notification-group
-        auto-offset-reset: earliest
-        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-        value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: notification-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+server:
+  port: 8081
+
+logging:
+  level:
+    org.springframework: INFO
+
+springdoc:
+  swagger-ui:
+    enabled: true
