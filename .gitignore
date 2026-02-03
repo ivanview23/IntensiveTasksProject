@@ -32,3 +32,5 @@ simple-cb-test.sh
 user-service/target
 notification-service/target
 api-gateway/target
+service-discovery/target
+config-server/target

@@ -20,7 +20,7 @@ public class NotificationServiceOpenAPIConfig {
                         .version("1.0.0")
                         .contact(new Contact()
                                 .name("Support Team")
-                                .email("support@example.com"))
+                                .email("${MAIL_USERNAME}"))
                         .license(new License()
                                 .name("Apache 2.0")
                                 .url("http://springdoc.org")))
