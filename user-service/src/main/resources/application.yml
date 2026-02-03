@@ -1,4 +1,7 @@
 spring:
+  config:
+    import: optional:configserver:http://localhost:8888
+
   application:
     name: user-service
 
@@ -8,24 +11,9 @@ spring:
     password: postgres
     driver-class-name: org.postgresql.Driver
 
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-
-  kafka:
-    bootstrap-servers: localhost:9092
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-
 server:
-  port: 8080
+  port: 8081
 
 logging:
   level:
     org.springframework: INFO
-
-springdoc:
-  swagger-ui:
-    enabled: true

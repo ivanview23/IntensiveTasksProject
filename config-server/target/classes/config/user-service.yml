@@ -1,0 +1,57 @@
+# Конфигурация только для user-service
+server:
+  port: 8081
+
+spring:
+  application:
+    name: user-service
+
+  datasource:
+    url: jdbc:h2:mem:userdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+# Kafka конфигурация
+spring.kafka:
+  bootstrap-servers: localhost:9092
+  producer:
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  consumer:
+    group-id: user-group
+    auto-offset-reset: earliest
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+# Настройки User Service
+user:
+  validation:
+    email-regex: "^[A-Za-z0-9+_.-]+@(.+)$"
+    min-name-length: 2
+    max-name-length: 50
+
+  security:
+    password:
+      min-length: 8
+      require-special-char: true
+      require-number: true
+
+logging:
+  level:
+    org.example.user: DEBUG
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG

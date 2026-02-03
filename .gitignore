@@ -24,4 +24,11 @@ hs_err_pid*
 replay_pid*
 
 # Конфиденциальные файлы
-notification-service/.env
+.env
+
+simple-cb-test.sh
+
+#Target
+user-service/target
+notification-service/target
+api-gateway/target

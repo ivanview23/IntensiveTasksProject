@@ -1,13 +1,21 @@
 # IntensiveTasksProject
 ## Практическая часть интенсива по Java в Aston.
+#### module 7
+`Добавить к существующей системе паттерны: gateway api, service discovery, circuit breaker,
+ external configuration - реализации данных паттернов можно найти в модулях spring cloud.`  
+- [x] Обновление корневого pom.xml,
+- [x] Добавление gateway api,
+- [x] Добавление service discovery,
+- [x] Добавление circuit breaker,
+- [x] Добавление external configuration
 
 #### module 6
 `Добавление Swagger-документации и HATEOAS в API.`
-- [ ] Задокументировать существующее API (из задания 4) с помощью Swagger (Springdoc OpenAPI), 
+- [x] Задокументировать существующее API (из задания 4) с помощью Swagger (Springdoc OpenAPI), 
       чтобы можно было легко изучить и тестировать API через веб-интерфейс.
-- [ ] Добавить поддержку HATEOAS, чтобы API предоставляло ссылки для навигации по ресурсам.
-http://localhost:8080/swagger-ui.html
-http://localhost:8081/swagger-ui/index.html
+- [x] Добавить поддержку HATEOAS, чтобы API предоставляло ссылки для навигации по ресурсам.  
+[веб-интерфейс для UserService](http://localhost:8080/swagger-ui.html)  
+[веб-интерфейс для NotificationService](http://localhost:8081/swagger-ui/index.html)
 
 #### module 5
 `Реализовать микросервис(notification-service) для отправки сообщения на почту при удалении или добавлении пользователя.`
