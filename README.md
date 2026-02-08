@@ -1,5 +1,10 @@
 # IntensiveTasksProject
 ## Практическая часть интенсива по Java в Aston.
+#### module 8
+`Создать docker-compose.yml, который развернет всю микросервисную систему, включая Kafka, PostgreSQL,
+ API Gateway, Service Discovery, External Configuration и 2 микросервиса(user-service и notification-service,
+ созданные ранее). Проверить, что сервисы корректно взаимодействуют друг с другом в контейнерной среде.`
+
 #### module 7
 `Добавить к существующей системе паттерны: gateway api, service discovery, circuit breaker,
  external configuration - реализации данных паттернов можно найти в модулях spring cloud.`  

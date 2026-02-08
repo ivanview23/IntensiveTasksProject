@@ -5,27 +5,23 @@ spring:
   application:
     name: config-server
 
-  profiles:
-    active: native
-
   cloud:
     config:
       server:
-        native:
-          search-locations: classpath:/config
-
-  security:
-    user:
-      name: admin
-      password: configpass
+        git:
+          uri: https://github.com/ivanview23/microservice-config.git
+          default-label: main
+          search-paths: '{application}.yml'
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,env,configprops
+        include: health,info,env
+      base-path: /actuator
   endpoint:
     health:
+      enabled: true
       show-details: always
 
 logging:
