@@ -12,13 +12,13 @@ eureka:
   instance:
     hostname: localhost
   client:
-    register-with-eureka: false   # Eureka сервер не регистрирует себя
-    fetch-registry: false         # Не получает реестр других инстансов
+    register-with-eureka: false
+    fetch-registry: false
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
-    enable-self-preservation: false  # Отключаем self-preservation для dev
-    eviction-interval-timer-in-ms: 5000  # Частота очистки мертвых инстансов
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 5000
 
 management:
   endpoints:

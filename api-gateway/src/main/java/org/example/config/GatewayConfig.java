@@ -62,7 +62,6 @@ public class GatewayConfig {
                         .filters(f -> f.setPath("/actuator/health"))
                         .uri("http://localhost:8080"))
 
-                // Дополнительный маршрут с Circuit Breaker для всех остальных запросов
                 .route("default-circuit-breaker", r -> r
                         .path("/api/**")
                         .filters(f -> f
@@ -70,7 +69,7 @@ public class GatewayConfig {
                                         .setName("defaultCB")
                                         .setFallbackUri("forward:/fallback/default")
                                 ))
-                        .uri("lb://UNKNOWN-SERVICE")) // Это сработает только если сервис не найден
+                        .uri("lb://UNKNOWN-SERVICE"))
                 .build();
     }
 }

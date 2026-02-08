@@ -5,7 +5,7 @@ spring:
   config:
     import: optional:configserver:http://localhost:8888
   application:
-    name: gateway-api
+    name: api-gateway
   cloud:
     gateway:
       discovery:

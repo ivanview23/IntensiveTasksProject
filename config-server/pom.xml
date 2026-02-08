@@ -10,14 +10,13 @@
     </parent>
 
     <artifactId>config-server</artifactId>
-    <description>Configuration Server для микросервисов</description>
+
     <properties>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
         <spring-cloud.version>2023.0.0</spring-cloud.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
 
     <dependencies>
         <!-- Spring Cloud Config Server -->
@@ -26,10 +25,14 @@
             <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
 
-        <!-- Security (опционально, для защиты конфигурации) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <!-- Actuator для мониторинга -->
@@ -71,8 +74,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.example.ConfigServerApplication</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>
